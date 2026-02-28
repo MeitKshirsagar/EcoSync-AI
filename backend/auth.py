@@ -14,10 +14,11 @@ from passlib.context import CryptContext
 from sqlmodel import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from config import config
 from database import User, get_db_session
 
-# Configuration (Use a strong secret in production!)
-SECRET_KEY = "super-secret-eco-sync-local-key"
+# Configuration loaded from environment via config module
+SECRET_KEY = config.JWT_SECRET_KEY
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 

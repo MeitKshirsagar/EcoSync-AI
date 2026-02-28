@@ -20,6 +20,10 @@ class Config:
     CORS_ORIGINS: list[str] = os.getenv(
         "ECOSYNC_CORS_ORIGINS", "http://localhost:5173,http://localhost:5174"
     ).split(",")
+    JWT_SECRET_KEY: str = os.getenv(
+        "ECOSYNC_JWT_SECRET",
+        os.getenv("JWT_SECRET", "eco-sync-dev-secret-key-change-in-production"),
+    )
 
     @property
     def is_live(self) -> bool:
