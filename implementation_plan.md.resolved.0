@@ -1,0 +1,78 @@
+# Eco-Sync AI — Multi-Agent Resilience Engine
+
+Build a FastAPI + React (TypeScript/Vite) application that scaffolds a 4-stage multi-agent pipeline for Indian market resilience analysis.
+
+## Proposed Changes
+
+### Backend Scaffolding
+
+#### [NEW] [backend/](file:///home/meitk/.gemini/antigravity/scratch/eco-sync-ai/backend/)
+- Python project with `requirements.txt` containing: `fastapi`, `uvicorn`, `statsmodels`, `pandas`, `pymcdm`, `langgraph`
+- `backend/main.py` — FastAPI app with `/api/health`, `/api/pipeline/status`, `/api/strategies` endpoints
+- CORS middleware configured for frontend dev server
+
+---
+
+### Agent Pipeline
+
+#### [NEW] [analyst.py](file:///home/meitk/.gemini/antigravity/scratch/eco-sync-ai/backend/agents/analyst.py)
+- VECM (Vector Error Correction Model) tool using `statsmodels.tsa.vector_ar.vecm`
+- Accepts time-series data (CPI + NSE indices), returns cointegration analysis results
+
+#### [NEW] [auditor.py](file:///home/meitk/.gemini/antigravity/scratch/eco-sync-ai/backend/agents/auditor.py)
+- FOCUS schema mapper for Indian business spend categories
+- Maps raw spend data into structured categories (Capex, Opex, Marketing, R&D, Regulatory)
+
+#### [NEW] [jurist.py](file:///home/meitk/.gemini/antigravity/scratch/eco-sync-ai/backend/agents/jurist.py)
+- ELECTRE III outranking and VIKOR compromise ranking
+- Uses `pymcdm` for multi-criteria decision analysis on strategies
+
+#### [NEW] [controller.py](file:///home/meitk/.gemini/antigravity/scratch/eco-sync-ai/backend/agents/controller.py)
+- Unit economics validator: checks CAC, LTV, burn rate, margin thresholds
+- Returns pass/fail with detailed breakdown
+
+---
+
+### Mock Data
+
+#### [NEW] [mock_data.py](file:///home/meitk/.gemini/antigravity/scratch/eco-sync-ai/backend/data/mock_data.py)
+- Generates 36-month Indian CPI (base ~6%, seasonal variation)
+- Generates NSE Nifty 50 index (base ~18000, with drift + volatility)
+- Returns pandas DataFrames
+
+---
+
+### Frontend Scaffolding
+
+#### [NEW] [frontend/](file:///home/meitk/.gemini/antigravity/scratch/eco-sync-ai/frontend/)
+- Vite + React + TypeScript template
+- Install: `tailwindcss`, `@tailwindcss/vite`, `lucide-react`, `axios`
+
+---
+
+### Dashboard Components
+
+#### [NEW] [PipelineProgress.tsx](file:///home/meitk/.gemini/antigravity/scratch/eco-sync-ai/frontend/src/components/PipelineProgress.tsx)
+- Horizontal progress bar: Analyst → Auditor → Jurist → Controller
+- Each stage shows status (pending/active/complete) with animated transitions
+
+#### [NEW] [StrategyGauntlet.tsx](file:///home/meitk/.gemini/antigravity/scratch/eco-sync-ai/frontend/src/components/StrategyGauntlet.tsx)
+- Displays 5 Indian business strategies with VIKOR scores
+- Strategies: Tier-2 City Expansion, Raw Material Bulk Buy, Digital-First D2C, Export Diversification, Green Energy Transition
+
+#### [NEW] [App.tsx](file:///home/meitk/.gemini/antigravity/scratch/eco-sync-ai/frontend/src/App.tsx)
+- Main dashboard assembling Pipeline + Strategy components
+- Health check indicator from backend
+
+## Verification Plan
+
+### Automated Tests
+1. **Backend health**: `curl http://localhost:8000/api/health` → expect `{"status": "ok"}`
+2. **Strategies endpoint**: `curl http://localhost:8000/api/strategies` → expect JSON array of 5 strategies with VIKOR scores
+3. **Frontend build**: `npm run build` in frontend/ → should succeed with no errors
+
+### Browser Verification
+1. Open `http://localhost:5173` in browser
+2. Verify Pipeline Progress bar renders with 4 stages
+3. Verify Strategy Gauntlet shows 5 strategies with scores
+4. Verify health status indicator shows connected to backend

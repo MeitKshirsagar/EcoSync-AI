@@ -1,0 +1,22 @@
+# Eco-Sync AI - Multi-Agent Resilience Engine
+
+## Task 1: Project Scaffolding
+- [ ] Create `backend/` with Python 3.12+, install FastAPI, uvicorn, statsmodels, pandas, pymcdm, langgraph
+- [ ] Create `frontend/` with Vite react-ts template, install tailwind-css, lucide-react, axios
+
+## Task 2: Agent Tooling (Backend)
+- [ ] Scaffold `backend/agents/analyst.py` — VECM tool using statsmodels
+- [ ] Scaffold `backend/agents/auditor.py` — FOCUS schema mapper for Indian business spend
+- [ ] Scaffold `backend/agents/jurist.py` — ELECTRE and VIKOR ranking logic
+- [ ] Scaffold `backend/agents/controller.py` — Unit economics validator
+- [ ] Create `backend/data/mock_data.py` — Indian CPI + NSE mock data generator
+
+## Task 3: Glass-Box Dashboard (Frontend)
+- [ ] Build Pipeline Progress bar component (Analyst → Auditor → Jurist → Controller)
+- [ ] Build Strategy Gauntlet component (5 mock Indian strategies + VIKOR ranking)
+- [ ] Integrate into main dashboard layout
+
+## Task 4: Verification
+- [ ] Launch FastAPI backend and verify `/api/health`
+- [ ] Launch Vite dev server and verify frontend loads
+- [ ] Verify frontend can fetch from backend `/api/health`
