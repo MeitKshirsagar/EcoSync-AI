@@ -95,7 +95,3 @@ pytest tests/ -v
 **Backend:** FastAPI · Python 3.11 · SQLite (aiosqlite) · statsmodels · pymcdm  
 **Frontend:** React 19 · TypeScript · Vite · Tailwind CSS v4 · Lucide icons  
 **DevOps:** Docker · nginx · docker-compose
-
-## License
-
-MIT
