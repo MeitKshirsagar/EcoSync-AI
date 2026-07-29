@@ -33,6 +33,7 @@ Eco-Sync is a transparent dashboard that analyzes Indian market data, ranks busi
 ```bash
 cd backend
 pip install -r requirements.txt
+export ECOSYNC_SECRET_KEY="your_secure_jwt_secret_here"  # Windows PowerShell: $env:ECOSYNC_SECRET_KEY="your_secure_jwt_secret_here"
 uvicorn main:app --reload
 ```
 
@@ -45,6 +46,7 @@ npm run dev
 
 ### Docker (full stack)
 ```bash
+export ECOSYNC_SECRET_KEY="your_secure_jwt_secret_here"
 docker compose up --build
 ```
 Frontend → `http://localhost:5173` · Backend API → `http://localhost:8000`
@@ -74,10 +76,11 @@ Frontend → `http://localhost:5173` · Backend API → `http://localhost:8000`
 
 ## Configuration
 
-Environment variables (see `backend/config.py`):
+Environment variables (see `backend/config.py` & `backend/auth.py`):
 
 | Variable | Default | Description |
 |----------|---------|-------------|
+| `ECOSYNC_SECRET_KEY` | *(Required)* | Secret key for JWT signature generation (fail-fast runtime check) |
 | `ECOSYNC_DATA_SOURCE` | `mock` | `mock` or `live` |
 | `ECOSYNC_CORS_ORIGINS` | `http://localhost:5173` | Comma-separated origins |
 | `ECOSYNC_DB_PATH` | `data/ecosync.db` | SQLite database path |

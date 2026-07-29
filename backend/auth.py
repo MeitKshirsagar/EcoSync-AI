@@ -4,6 +4,7 @@ Eco-Sync AI — Authentication & Authorization Layer
 Provides secure, local stateless JWT issuing and validation.
 """
 
+import os
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -14,11 +15,13 @@ from passlib.context import CryptContext
 from sqlmodel import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from config import config
 from database import User, get_db_session
 
-# Configuration loaded from environment via config module
-SECRET_KEY = config.JWT_SECRET_KEY
+# Configuration loaded from environment variable
+SECRET_KEY = os.getenv("ECOSYNC_SECRET_KEY")
+if not SECRET_KEY:
+    raise RuntimeError("ECOSYNC_SECRET_KEY environment variable is required (do not hardcode secrets in source).")
+
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 
