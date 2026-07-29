@@ -4,6 +4,7 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - ECOSYNC_SECRET_KEY=${ECOSYNC_SECRET_KEY:-your_jwt_secret_here}
       - ECOSYNC_DATA_SOURCE=mock
       - ECOSYNC_CORS_ORIGINS=http://localhost:5173,http://localhost:80
     volumes:
